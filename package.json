@@ -8,7 +8,10 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "swagger": "node -r ts-node/register swagger/index.ts"
+    "swagger": "node -r ts-node/register swagger/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "docker": "docker build -t kirikovr/skbt:latest .",
+    "dockerPush": "docker push kirikovr/skbt:latest"
   },
   "dependencies": {
     "compression": "^1.7.4",
