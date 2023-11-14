@@ -3,6 +3,7 @@ node_modules
 
 # Yarn lock
 yarn.lock
+yarn-error.log
 
 # Local config
 config-local.json
