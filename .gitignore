@@ -1,7 +1,3 @@
-# Logs
-logs
-*.log
-
 # Dependency directories
 node_modules
 
@@ -20,5 +16,9 @@ dist/
 
 # Draft files
 draft.*
+
+logs/
+
+api-spec.json
 
 package-lock.json
