@@ -2,7 +2,7 @@ version: "2"
 services:
   faq-service-daemon:
     restart: always
-    image: skbt:latest
+    image: kirikovr/skbt:latest
     network_mode: host
     volumes:
       - ./logs:/app/logs
