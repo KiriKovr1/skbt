@@ -1,0 +1,9 @@
+version: "2"
+services:
+  faq-service-daemon:
+    restart: always
+    image: skbt:latest
+    network_mode: host
+    volumes:
+      - ./logs:/app/logs
+      - ./config-local.json:/app/config-local.json

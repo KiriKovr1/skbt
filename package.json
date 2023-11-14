@@ -6,6 +6,7 @@
   "license": "ISC",
   "private": true,
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "swagger": "node -r ts-node/register swagger/index.ts"
   },
