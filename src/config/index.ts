@@ -15,7 +15,8 @@ export type BasicAuthConfig = {
 };
 
 export type LoggerConfig = {
-    logsDir: 'logs';
+    logsDir: string;
+    logsDelayedError?: string;
 };
 
 export type DbConfig = {
@@ -29,6 +30,7 @@ export type DbConfig = {
 export type Config = {
     basicAuth: BasicAuthConfig;
     server: ServerConfig;
+    logger: LoggerConfig;
     db: DbConfig;
 };
 
@@ -46,4 +48,5 @@ const config: Config = merge(defaultConfig, configLocal);
 
 export const serverConfig = config.server;
 export const basicAuthConfig = config.basicAuth;
+export const loggerConfig = config.logger;
 export const dbConfig = config.db;

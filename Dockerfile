@@ -28,18 +28,17 @@ WORKDIR /app
 COPY \
     package.json \
     tsconfig.json \
+    swagger.json \
     /app/
 
+RUN yarn install
+
 COPY src/ /app/src/
-COPY swagger/ /app/swagger/
-
-RUN yarn install && yarn swagger
-
 RUN yarn run build && \
-    cp -a package.json api-spec.json dist/ && \
+    cp -a package.json swagger.json dist/ && \
     cd dist && \
     yarn install --production && \
-    rm -rf swagger package.json yarn.lock
+    rm -rf package.json yarn.lock
 
 FROM nodejs AS runner
 

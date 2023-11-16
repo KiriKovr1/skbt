@@ -4,3 +4,5 @@ export enum errors {
 }
 
 export const CATEGORIES = 'category';
+export const VISIBLE_CATEGORY_COLUMNS = ['id', 'slug', 'name', 'description', 'active'] as const;
+export const CATEGORY_COLUMNS = [...VISIBLE_CATEGORY_COLUMNS, 'createdDate'];

@@ -1,13 +1,17 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { ValidationError } from 'express-validator';
+import { Request } from 'express';
+import { ValidationError, validationResult } from 'express-validator';
 
 import { serverLogger as logger } from '../logger';
+import BadRequest from '../models/errors/BadRequest';
+import { CATEGORY_COLUMNS } from '../constants/db';
+import { TCategoryKey } from '../types/Complex';
 
 export const getSwaggerFile = async () => {
     try {
-        const swagger = await fs.readFile(path.join(process.cwd(), 'api-spec.json'), { encoding: 'utf-8' });
+        const swagger = await fs.readFile(path.join(process.cwd(), 'swagger.json'), { encoding: 'utf-8' });
 
         return JSON.parse(swagger);
     } catch (err) {
@@ -25,3 +29,17 @@ export const formatBadRequestMsg = (errors: ValidationError[]) => errors.map((er
 
     return err.msg;
 }).join('\n');
+
+export const validateRequest = (req: Request) => {
+    const errors = validationResult(req).array();
+
+    if (errors.length) {
+        throw new BadRequest(formatBadRequestMsg(errors));
+    }
+};
+
+export const validateField = (field: string) => (
+    CATEGORY_COLUMNS.includes(field)
+        ? field as TCategoryKey
+        : 'createdDate'
+);

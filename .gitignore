@@ -20,6 +20,4 @@ draft.*
 
 logs/
 
-api-spec.json
-
 package-lock.json

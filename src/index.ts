@@ -7,7 +7,7 @@ import basicAuth from 'express-basic-auth';
 import swaggerUi from 'swagger-ui-express';
 
 import apiRouter from './router';
-import errorMiddleware from './middleware/error.middleware';
+import errorMiddleware from './middleware/errorMiddleware';
 import DB from './services/Db/DB';
 
 import { serverLogger as logger, clientLoggerMiddleware } from './logger';
@@ -20,12 +20,9 @@ import { getSwaggerFile } from './utils';
         process.on('exit', (code) => logger.debug(`The server is stop, code#${code} pid#${process.pid}, ts#${Date.now()}`));
 
         const app: Express = express();
-        const appMiddleware = [
-            clientLoggerMiddleware,
-            compression(),
-            express.json({ limit: '16mb' }),
-        ];
-        appMiddleware.forEach((it) => app.use(it));
+        app.use(clientLoggerMiddleware);
+        app.use(compression());
+        app.use(express.json({ limit: '16mb' }));
 
         const swagger = await getSwaggerFile();
         if (swagger) {

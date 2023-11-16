@@ -1,0 +1,226 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Categories API",
+    "description": "Categories API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001/api/v1",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/category/byFilter": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Поиск категорий по полю name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Поиск категорий по полю description",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Поиск категорий по полю active",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Поиск осуществляется по полю name и description через “или”",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Кол-во записей на страницу. Допустимы только цифры от 1-9",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Номер страницы. Допустимы только цифры",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Сортировка категорий",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Обновленная Категория",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Category"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "query",
+            "description": "Поиск категории по полю slug",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Поиск категории по полю id",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Обновленная Категория",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Модель Категории",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Созданная Категория",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    },
+    "/category/{slug}": {
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "slug удаляемой категории"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Categories"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "slug обновляемой категории"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Модель Категории с полями надлежащими изменению",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Обновленная Категория",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "slug": {
+          "type": "string",
+          "example": "category"
+        },
+        "name": {
+          "type": "string",
+          "example": "Категория"
+        },
+        "description": {
+          "type": "string",
+          "example": "Описание Категории"
+        },
+        "active": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    }
+  }
+}

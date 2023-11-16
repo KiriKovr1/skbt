@@ -1,5 +1,8 @@
 import { Knex, knex } from 'knex';
 
+// @ts-ignore
+import knexStringcase from 'knex-stringcase';
+
 import { dbConfig as db } from '../../config';
 
 class DB {
@@ -7,7 +10,7 @@ class DB {
 
     static skbt() {
         if (!this.__skbt) {
-            this.__skbt = knex({
+            this.__skbt = knex(knexStringcase({
                 client: 'pg',
                 connection: {
                     host: db.host,
@@ -16,7 +19,7 @@ class DB {
                     database: db.database,
                     password: db.password,
                 },
-            });
+            }));
         }
 
         return this.__skbt;

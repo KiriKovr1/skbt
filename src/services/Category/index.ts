@@ -1,13 +1,19 @@
 import CategoryDb from '../Db/CategoryDb';
-import BadRequest from '../../models/error/BadRequest';
+import BadRequest from '../../models/errors/BadRequest';
 
 import { messages } from '../../constants/error';
 import { errors } from '../../constants/db';
+import { validateField } from '../../utils';
 
 import { TPgError } from '../../types/db';
-import { TCategory, TPartialCategory } from '../../types/models';
-
-type TAnyAsyncFunction = (...args: any[]) => Promise<any>
+import {
+    TCategory,
+    TCategorySearchParams,
+    TFilterQuery,
+    TPartialCategory,
+    TSortTuple,
+    TAnyAsyncFunction,
+} from '../../types/Complex';
 
 class Category {
     private static __errorHandler<F extends TAnyAsyncFunction>(f: F) {
@@ -31,6 +37,54 @@ class Category {
                 }
             }
         };
+    }
+
+    static async getByFilter({
+        search,
+        name,
+        description,
+        active,
+        sort = '-createdDate',
+        pageSize = 2,
+        page = 0,
+    }: TFilterQuery) {
+        const [sortType, sortField]: TSortTuple = sort.startsWith('-')
+            ? ['DESC', validateField(sort.slice(1))]
+            : ['ASC', validateField(sort)];
+
+        const limit = pageSize;
+        const offset = ((page || 1) - 1) * limit;
+
+        const filter = {
+            ...search
+                ? { search }
+                : {
+                    ...name && { name },
+                    ...description && { description },
+                },
+            ...active && { active },
+        };
+
+        const { getByFilter } = CategoryDb;
+
+        // eslint-disable-next-line max-len
+        const result = await this.__errorHandler<typeof getByFilter>(getByFilter.bind(CategoryDb))({
+            sortType,
+            sortField,
+            limit,
+            filter,
+            offset,
+        });
+
+        return result;
+    }
+
+    static async getBySlugOrId(searchParam: TCategorySearchParams) {
+        const { getBySlugOrId } = CategoryDb;
+
+        // eslint-disable-next-line max-len
+        const result = await this.__errorHandler<typeof getBySlugOrId>(getBySlugOrId.bind(CategoryDb))(searchParam);
+        return result;
     }
 
     static async create(category: TCategory) {

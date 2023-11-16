@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import HttpError from '../models/error/HttpError';
+import HttpError from '../models/errors/HttpError';
 import { serverLogger as logger } from '../logger';
 import { messages } from '../constants/error';
 
