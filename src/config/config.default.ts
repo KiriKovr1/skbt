@@ -14,9 +14,9 @@ const config = {
     },
     db: {
         host: 'localhost',
-        port: 5432,
+        port: 5431,
         user: 'postgres',
-        password: 'nuta',
+        password: 'psql-skbt',
         database: 'skbt',
     },
 

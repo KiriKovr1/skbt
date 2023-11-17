@@ -1,3 +1,7 @@
+export type TErrorStatus = 500 | 400;
+export type TAnyAsyncFunction = (...args: any[]) => Promise<any>;
+export type TPgError = Error & { code: string };
+
 export type TCategory = {
     id: string;
     slug: string;
@@ -7,17 +11,14 @@ export type TCategory = {
     createdDate?: Date;
 };
 
-export type TErrorStatus = 500 | 400;
-export type TAnyAsyncFunction = (...args: any[]) => Promise<any>
-
-export type TPartialCategory = Partial<TCategory>
 export type TCategorySearchParams = {
     id?: string;
     slug?: string;
 };
 
+export type TPartialCategory = Partial<TCategory>;
 export type TCategoryKey = keyof TCategory | 'createdDate';
-export type TSort = `-${TCategoryKey}` | TCategoryKey
+export type TSort = `-${TCategoryKey}` | TCategoryKey;
 
 export type TFilterQuery = {
     name?: string;
@@ -30,12 +31,12 @@ export type TFilterQuery = {
 }
 
 export type TSortType = 'ASC' | 'DESC';
-export type TSortTuple = [TSortType, TCategoryKey]
+export type TSortTuple = [TSortType, TCategoryKey];
 
 export type TFilter = {
     sortType: TSortType;
     sortField: TCategoryKey;
     limit: number;
     offset: number;
-    filter: Omit<TFilterQuery, 'page' | 'pageSize' | 'sort'>;
-}
+    filter: Pick<TFilterQuery, 'description' | 'name' | 'search'>;
+};

@@ -1,4 +1,4 @@
-version: "1"
+version: "2"
 services:
   skbt:
     restart: always
@@ -7,3 +7,16 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./config-local.json:/app/config-local.json
+
+  migration:
+    restart: on-failure
+    image: kirikovr/skbt-migration:latest
+    network_mode: host
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: psql-skbt
+    ports:
+      - 5431:5432

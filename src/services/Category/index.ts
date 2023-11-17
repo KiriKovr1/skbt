@@ -1,11 +1,12 @@
 import CategoryDb from '../Db/CategoryDb';
 import BadRequest from '../../models/errors/BadRequest';
 
+import { validateField } from '../../utils';
+import { serverLogger as logger } from '../../logger';
+
 import { messages } from '../../constants/error';
 import { errors } from '../../constants/db';
-import { validateField } from '../../utils';
 
-import { TPgError } from '../../types/db';
 import {
     TCategory,
     TCategorySearchParams,
@@ -13,6 +14,7 @@ import {
     TPartialCategory,
     TSortTuple,
     TAnyAsyncFunction,
+    TPgError,
 } from '../../types/Complex';
 
 class Category {
@@ -55,6 +57,8 @@ class Category {
         const limit = pageSize;
         const offset = ((page || 1) - 1) * limit;
 
+        logger.debug(`Create parameters for query, sortType#${sortType}, sortField#${sortField}, limit#${limit}, offset#${offset}`);
+
         const filter = {
             ...search
                 ? { search }
@@ -64,6 +68,8 @@ class Category {
                 },
             ...active && { active },
         };
+
+        logger.debug(`Create filter for query, filter#${JSON.stringify(filter)}}`);
 
         const { getByFilter } = CategoryDb;
 

@@ -1,24 +1,31 @@
 import { Router } from 'express';
 import {
-    body, oneOf, param, query,
+    body,
+    oneOf,
+    param,
+    query,
 } from 'express-validator';
 
-import {
-    createCategory,
-    deletCategory,
-    updateCategory,
-    getBySlugOrId,
-    getByFilter,
-} from '../controllers/category';
+import CategoryController from '../controllers/category';
+
 import { messages } from '../constants/error';
 
 const categoryRouter = Router();
 
 categoryRouter.get(
     '/byFilter',
-    query('name').optional().isString().trim(),
-    query('description').optional().isString().trim(),
-    query('search').optional().isString().trim(),
+    query('name')
+        .optional()
+        .isString()
+        .trim(),
+    query('description')
+        .optional()
+        .isString()
+        .trim(),
+    query('search')
+        .optional()
+        .isString()
+        .trim(),
     query('pageSize')
         .optional()
         .isInt()
@@ -29,7 +36,7 @@ categoryRouter.get(
         .optional()
         .isInt()
         .toInt(),
-    getByFilter,
+    CategoryController.getByFilter,
 );
 
 categoryRouter.get(
@@ -44,7 +51,7 @@ categoryRouter.get(
     ], {
         message: messages.ID_OR_SLUG_IS_REQUIRED,
     }),
-    getBySlugOrId,
+    CategoryController.getBySlugOrId,
 );
 
 categoryRouter.post(
@@ -56,7 +63,7 @@ categoryRouter.post(
         .isString()
         .matches(/^[A-Za-z]+$/)
         .withMessage(messages.NOT_LATIN),
-    createCategory,
+    CategoryController.createCategory,
 );
 
 categoryRouter.delete(
@@ -65,7 +72,7 @@ categoryRouter.delete(
         .isString()
         .matches(/^[A-Za-z]+$/)
         .withMessage(messages.NOT_LATIN),
-    deletCategory,
+    CategoryController.deletCategory,
 );
 
 categoryRouter.patch(
@@ -79,7 +86,7 @@ categoryRouter.patch(
         .isString()
         .matches(/^[A-Za-z]+$/)
         .withMessage(messages.NOT_LATIN),
-    updateCategory,
+    CategoryController.updateCategory,
 );
 
 export default categoryRouter;
