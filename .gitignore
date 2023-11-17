@@ -12,12 +12,13 @@ config-local.json
 dist/
 
 # IDE folders
-.idea/
 .vscode/
 
 # Draft files
 draft.*
 
+# logs
 logs/
 
+# package-lock
 package-lock.json

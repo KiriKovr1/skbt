@@ -17,7 +17,7 @@ export type TCategorySearchParams = {
 };
 
 export type TPartialCategory = Partial<TCategory>;
-export type TCategoryKey = keyof TCategory | 'createdDate';
+export type TCategoryKey = keyof TCategory;
 export type TSort = `-${TCategoryKey}` | TCategoryKey;
 
 export type TFilterQuery = {
