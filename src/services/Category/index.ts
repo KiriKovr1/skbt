@@ -69,7 +69,7 @@ class Category {
             ...active && { active },
         };
 
-        logger.debug(`Create filter for query, filter#${JSON.stringify(filter)}}`);
+        logger.debug(`Create filter for query, filter#${JSON.stringify(filter)}`);
 
         const { getByFilter } = CategoryDb;
 
