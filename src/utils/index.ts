@@ -38,9 +38,8 @@ export const validateRequest = (req: Request) => {
     }
 };
 
-export const validateField = (field: string) => {
-    console.log(CATEGORY_COLUMNS, field);
-    return CATEGORY_COLUMNS.includes(field)
+export const validateField = (field: string) => (
+    CATEGORY_COLUMNS.includes(field)
         ? field as TCategoryKey
-        : 'createdDate';
-};
+        : 'createdDate'
+);
